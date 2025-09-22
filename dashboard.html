@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <h2>Welcome, {{ user.name }}</h2>
+  <p>Email: {{ user.email }}</p>
+  <p>Credit Score: <strong>{{ user.credit_score }}</strong></p>
+
+  <h3>Your Waste Records</h3>
+  {% if records %}
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Landfill</th>
+        <th>Type</th>
+        <th>Weight (kg)</th>
+        <th>Notes</th>
+        <th>Actions</th> </tr>
+      {% for rec in records %}
+        <tr>
+          <td>{{ rec.created_at.strftime('%Y-%m-%d') }}</td>
+          <td>{{ rec.landfill_name or '-' }}</td>
+          <td>{{ rec.waste_type.capitalize() }}</td>
+          <td>{{ rec.weight_kg }}</td>
+          <td>{{ rec.notes or '-' }}</td>
+          <td><a href="{{ url_for('edit_record', record_id=rec.record_id) }}" class="btn">Edit</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No records yet. <a href="{{ url_for('submit_waste') }}">Submit your first waste record.</a></p>
+  {% endif %}
+{% endblock %}
+
+</body>
+</html>

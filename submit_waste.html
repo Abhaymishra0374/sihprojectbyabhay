@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block title %}Submit Waste{% endblock %}
+
+{% block content %}
+  <h2>Submit Waste Record</h2>
+  <form method="POST">
+    <label>Landfill / Drop Point:</label>
+    <select name="landfill">
+      <option value="">-- Select --</option>
+      {% for landfill in landfills %}
+        <option value="{{ landfill.landfill_id }}">{{ landfill.name }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Waste Type:</label>
+    <select name="waste_type" required>
+      <option value="wet">Wet</option>
+      <option value="dry">Dry</option>
+      <option value="electronic">Electronic</option>
+      <option value="hazardous">Hazardous</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label>Weight (kg):</label>
+    <input type="number" name="weight_kg" step="0.01" min="0" required>
+
+    <label>Notes:</label>
+    <textarea name="notes"></textarea>
+
+    <button type="submit">Submit Waste</button>
+  </form>
+{% endblock %}
+
+</body>
+</html>

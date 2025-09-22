@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block title %}Home - Waste Tracker{% endblock %}
+
+{% block content %}
+  <h2>Welcome to Waste Tracker</h2>
+  <p>Track your waste, earn credit points, and contribute to a cleaner environment.</p>
+  {% if 'user_id' not in session %}
+    <p><a href="{{ url_for('register') }}" class="btn">Get Started</a></p>
+  {% endif %}
+{% endblock %}
+
+</body>
+</html>

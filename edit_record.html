@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block title %}Edit Waste Record{% endblock %}
+
+{% block content %}
+  <h2>Edit Waste Record</h2>
+  <form method="POST">
+    <label>Landfill / Drop Point:</label>
+    <select name="landfill">
+      <option value="">-- Select --</option>
+      {% for landfill in landfills %}
+        <option value="{{ landfill.landfill_id }}" {% if landfill.landfill_id == record.landfill_id %}selected{% endif %}>
+          {{ landfill.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <label>Waste Type:</label>
+    <select name="waste_type" required>
+      <option value="wet" {% if record.waste_type == 'wet' %}selected{% endif %}>Wet</option>
+      <option value="dry" {% if record.waste_type == 'dry' %}selected{% endif %}>Dry</option>
+      <option value="electronic" {% if record.waste_type == 'electronic' %}selected{% endif %}>Electronic</option>
+      <option value="hazardous" {% if record.waste_type == 'hazardous' %}selected{% endif %}>Hazardous</option>
+      <option value="other" {% if record.waste_type == 'other' %}selected{% endif %}>Other</option>
+    </select>
+
+    <label>Weight (kg):</label>
+    <input type="number" name="weight_kg" step="0.01" min="0" value="{{ record.weight_kg }}" required>
+
+    <label>Notes:</label>
+    <textarea name="notes">{{ record.notes or '' }}</textarea>
+
+    <button type="submit">Update Record</button>
+  </form>
+{% endblock %}
+</body>
+</html>
